@@ -8,88 +8,113 @@ namespace ChatApp.Security
 {
     public class AESConfiguration
     {
-        public static string IV = "qo1lc3sjd8zpt9cx";
-        public static string Key = "ow7dxys8glfor9tnc2ansdfo1etkfjcv";
 
-        public static string Encrypt(string decrypted)
+
+        public byte[] Encrypt(byte[] data, RSAParameters RSAKey, bool fOAEP)
         {
-
-            byte[] textbytes = ASCIIEncoding.ASCII.GetBytes(decrypted);
-            AesCryptoServiceProvider encdec = new AesCryptoServiceProvider();
-            encdec.BlockSize = 128;
-            encdec.KeySize = 256;
-            encdec.Key = ASCIIEncoding.ASCII.GetBytes(Key);
-            encdec.IV = ASCIIEncoding.ASCII.GetBytes(IV);
-            encdec.Padding = PaddingMode.PKCS7;
-            encdec.Mode = CipherMode.CBC;
-
-            ICryptoTransform icrypt = encdec.CreateEncryptor(encdec.Key, encdec.IV);
-
-            byte[] enc = icrypt.TransformFinalBlock(textbytes, 0, textbytes.Length);
-            icrypt.Dispose();
-
-            return Convert.ToBase64String(enc);
+            byte[] encryptedData;
+            using (RSACryptoServiceProvider rSACryptoServiceProvider = new RSACryptoServiceProvider())
+            {
+                rSACryptoServiceProvider.ImportParameters(RSAKey);
+                encryptedData = rSACryptoServiceProvider.Encrypt(data, fOAEP);
+            }
+            return encryptedData;
         }
 
-        public static string Decrypt(string encrypted)
+        public byte[] Decrypt(byte[] data, RSAParameters RSAKey, bool fOAEP)
         {
-
-            byte[] encbytes = Convert.FromBase64String(encrypted);
-            AesCryptoServiceProvider encdec = new AesCryptoServiceProvider();
-            encdec.BlockSize = 128;
-            encdec.KeySize = 256;
-            encdec.Key = ASCIIEncoding.ASCII.GetBytes(Key);
-            encdec.IV = ASCIIEncoding.ASCII.GetBytes(IV);
-            encdec.Padding = PaddingMode.PKCS7;
-            encdec.Mode = CipherMode.CBC;
-
-            ICryptoTransform icrypt = encdec.CreateDecryptor(encdec.Key, encdec.IV);
-
-            byte[] dec = icrypt.TransformFinalBlock(encbytes, 0, encbytes.Length);
-            icrypt.Dispose();
-
-            return ASCIIEncoding.ASCII.GetString(dec);
+            byte[] decryptedData;
+            using (RSACryptoServiceProvider rSACryptoServiceProvider = new RSACryptoServiceProvider())
+            {
+                rSACryptoServiceProvider.ImportParameters(RSAKey);
+                decryptedData = rSACryptoServiceProvider.Decrypt(data, fOAEP);
+            }
+            return decryptedData;
         }
 
 
-        #region trying another way
+        //public static string IV = "qo1lc3sjd8zpt9cx";
+        //public static string Key = "ow7dxys8glfor9tnc2ansdfo1etkfjcv";
 
-        public static byte[] EncryptAnother(byte[] textbytes)
-        {
-            AesCryptoServiceProvider encdec = new AesCryptoServiceProvider();
-            encdec.BlockSize = 128;
-            encdec.KeySize = 256;
-            encdec.Key = ASCIIEncoding.ASCII.GetBytes(Key);
-            encdec.IV = ASCIIEncoding.ASCII.GetBytes(IV);
-            encdec.Padding = PaddingMode.PKCS7;
-            encdec.Mode = CipherMode.CBC;
+        //public static string Encrypt(string decrypted)
+        //{
 
-            ICryptoTransform icrypt = encdec.CreateEncryptor(encdec.Key, encdec.IV);
+        //    byte[] textbytes = ASCIIEncoding.ASCII.GetBytes(decrypted);
+        //    AesCryptoServiceProvider encdec = new AesCryptoServiceProvider();
+        //    encdec.BlockSize = 128;
+        //    encdec.KeySize = 256;
+        //    encdec.Key = ASCIIEncoding.ASCII.GetBytes(Key);
+        //    encdec.IV = ASCIIEncoding.ASCII.GetBytes(IV);
+        //    encdec.Padding = PaddingMode.PKCS7;
+        //    encdec.Mode = CipherMode.CBC;
 
-            byte[] enc = icrypt.TransformFinalBlock(textbytes, 0, textbytes.Length);
-            icrypt.Dispose();
+        //    ICryptoTransform icrypt = encdec.CreateEncryptor(encdec.Key, encdec.IV);
 
-            return enc;
-        }
+        //    byte[] enc = icrypt.TransformFinalBlock(textbytes, 0, textbytes.Length);
+        //    icrypt.Dispose();
 
-        public static byte[] DecryptAnother(byte[] encbytes)
-        {
-            AesCryptoServiceProvider encdec = new AesCryptoServiceProvider();
-            encdec.BlockSize = 128;
-            encdec.KeySize = 256;
-            encdec.Key = ASCIIEncoding.ASCII.GetBytes(Key);
-            encdec.IV = ASCIIEncoding.ASCII.GetBytes(IV);
-            encdec.Padding = PaddingMode.PKCS7;
-            encdec.Mode = CipherMode.CBC;
+        //    return Convert.ToBase64String(enc);
+        //}
 
-            ICryptoTransform icrypt = encdec.CreateDecryptor(encdec.Key, encdec.IV);
+        //public static string Decrypt(string encrypted)
+        //{
 
-            byte[] dec = icrypt.TransformFinalBlock(encbytes, 0, encbytes.Length);
-            icrypt.Dispose();
+        //    byte[] encbytes = Convert.FromBase64String(encrypted);
+        //    AesCryptoServiceProvider encdec = new AesCryptoServiceProvider();
+        //    encdec.BlockSize = 128;
+        //    encdec.KeySize = 256;
+        //    encdec.Key = ASCIIEncoding.ASCII.GetBytes(Key);
+        //    encdec.IV = ASCIIEncoding.ASCII.GetBytes(IV);
+        //    encdec.Padding = PaddingMode.PKCS7;
+        //    encdec.Mode = CipherMode.CBC;
 
-            return dec;
-        }
+        //    ICryptoTransform icrypt = encdec.CreateDecryptor(encdec.Key, encdec.IV);
 
-        #endregion
+        //    byte[] dec = icrypt.TransformFinalBlock(encbytes, 0, encbytes.Length);
+        //    icrypt.Dispose();
+
+        //    return ASCIIEncoding.ASCII.GetString(dec);
+        //}
+
+
+        //#region trying another way
+
+        //public static byte[] EncryptAnother(byte[] textbytes)
+        //{
+        //    AesCryptoServiceProvider encdec = new AesCryptoServiceProvider();
+        //    encdec.BlockSize = 128;
+        //    encdec.KeySize = 256;
+        //    encdec.Key = ASCIIEncoding.ASCII.GetBytes(Key);
+        //    encdec.IV = ASCIIEncoding.ASCII.GetBytes(IV);
+        //    encdec.Padding = PaddingMode.PKCS7;
+        //    encdec.Mode = CipherMode.CBC;
+
+        //    ICryptoTransform icrypt = encdec.CreateEncryptor(encdec.Key, encdec.IV);
+
+        //    byte[] enc = icrypt.TransformFinalBlock(textbytes, 0, textbytes.Length);
+        //    icrypt.Dispose();
+
+        //    return enc;
+        //}
+
+        //public static byte[] DecryptAnother(byte[] encbytes)
+        //{
+        //    AesCryptoServiceProvider encdec = new AesCryptoServiceProvider();
+        //    encdec.BlockSize = 128;
+        //    encdec.KeySize = 256;
+        //    encdec.Key = ASCIIEncoding.ASCII.GetBytes(Key);
+        //    encdec.IV = ASCIIEncoding.ASCII.GetBytes(IV);
+        //    encdec.Padding = PaddingMode.PKCS7;
+        //    encdec.Mode = CipherMode.CBC;
+
+        //    ICryptoTransform icrypt = encdec.CreateDecryptor(encdec.Key, encdec.IV);
+
+        //    byte[] dec = icrypt.TransformFinalBlock(encbytes, 0, encbytes.Length);
+        //    icrypt.Dispose();
+
+        //    return dec;
+        //}
+
+        //#endregion
     }
 }

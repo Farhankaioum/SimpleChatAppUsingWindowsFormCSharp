@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Net;
 using System.Net.Sockets;
 using ChatApp.Security;
+using System.Security.Cryptography;
 
 namespace ChatApp
 {
@@ -17,6 +18,7 @@ namespace ChatApp
         Socket sck;
         EndPoint epLocal, epRemote;
         byte[] buffer;
+
         public Form1()
         {
             InitializeComponent();
@@ -69,15 +71,12 @@ namespace ChatApp
             byte[] sendingMessage = new byte[1500];
             sendingMessage = aEncoding.GetBytes(textMessage.Text);
 
-            // For encrypted message
-            //var message = AESConfiguration.Encrypt(textMessage.Text);
-            //byte[] encbytes = aEncoding.GetBytes(message);
-
-            // 2nd way
-            var encbytes = AESConfiguration.EncryptAnother(sendingMessage);
-
+            // For Encrypted
+            var encryptedValue = AESSecurity.doEncryptAES(textMessage.Text, "keiuom");
+            sendingMessage = aEncoding.GetBytes(encryptedValue);
+            
             //sending the encoded message
-            sck.Send(encbytes);
+            sck.Send(sendingMessage);
 
             //adding to the listbox
             listMessage.Items.Add("Me:" + textMessage.Text);
@@ -90,17 +89,21 @@ namespace ChatApp
         {
             try
             {
-
-                byte[] receivedData = new byte[1500];
+                byte[] receivedData = new byte[120];
                 receivedData = (byte[])aResult.AsyncState;
-                //converting byte[] to string
+
+                
+                //converting bute [] to string
                 ASCIIEncoding aEncoding = new ASCIIEncoding();
-                string receivedMessage = ASCIIEncoding.ASCII.GetString(receivedData);
+                var receivedValue = aEncoding.GetString(receivedData);
+                var receive = receivedValue.Split('\0');
+                var receiveMessage = receive[0];
 
-                var decValue = AESConfiguration.DecryptAnother(receivedData);
-
+                // decrypted data
+                var decryptedMessage = AESSecurity.doDecryptAES(receiveMessage, "keiuom");
+               
                 //adding message into listbox
-                listMessage.Items.Add("Friend:" + decValue);
+                listMessage.Items.Add("Friend:" + decryptedMessage);
                 buffer = new byte[1500];
                 sck.BeginReceiveFrom(buffer, 0, buffer.Length, SocketFlags.None, ref epRemote, new AsyncCallback(Messagecallback), buffer);
             }
