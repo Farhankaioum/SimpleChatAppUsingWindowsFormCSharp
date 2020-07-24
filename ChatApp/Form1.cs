@@ -92,12 +92,12 @@ namespace ChatApp
                 byte[] receivedData = new byte[120];
                 receivedData = (byte[])aResult.AsyncState;
 
-                
-                //converting bute [] to string
+                //converting byte[] to string
                 ASCIIEncoding aEncoding = new ASCIIEncoding();
                 var receivedValue = aEncoding.GetString(receivedData);
                 var receive = receivedValue.Split('\0');
                 var receiveMessage = receive[0];
+
 
                 // decrypted data
                 var decryptedMessage = AESSecurity.doDecryptAES(receiveMessage, "keiuom");
