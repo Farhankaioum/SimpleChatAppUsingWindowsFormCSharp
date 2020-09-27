@@ -95,8 +95,8 @@ namespace ChatApp
                 //converting byte[] to string
                 ASCIIEncoding aEncoding = new ASCIIEncoding();
                 var receivedValue = aEncoding.GetString(receivedData);
-                var receive = receivedValue.Split('\0');
-                var receiveMessage = receive[0];
+                var splitValue = receivedValue.Split('\0');
+                var receiveMessage = splitValue[0];
 
 
                 // decrypted data
