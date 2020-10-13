@@ -103,7 +103,7 @@ namespace ChatApp
                 var decryptedMessage = AESSecurity.doDecryptAES(receiveMessage, "keiuom");
                
                 //adding message into listbox
-                listMessage.Items.Add("Friend:" + decryptedMessage);
+                listMessage.Items.Add("Friend:" + receiveMessage);
                 buffer = new byte[1500];
                 sck.BeginReceiveFrom(buffer, 0, buffer.Length, SocketFlags.None, ref epRemote, new AsyncCallback(Messagecallback), buffer);
             }

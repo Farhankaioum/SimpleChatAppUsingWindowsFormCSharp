@@ -1,0 +1,13 @@
+H:\DesktopMedia\ChatApp\Reflection.Console\obj\Debug\netcoreapp3.1\Reflection.Console.AssemblyInfoInputs.cache
+H:\DesktopMedia\ChatApp\Reflection.Console\obj\Debug\netcoreapp3.1\Reflection.Console.AssemblyInfo.cs
+H:\DesktopMedia\ChatApp\Reflection.Console\obj\Debug\netcoreapp3.1\Reflection.Console.csproj.CoreCompileInputs.cache
+H:\DesktopMedia\ChatApp\Reflection.Console\bin\Debug\netcoreapp3.1\Reflection.Console.exe
+H:\DesktopMedia\ChatApp\Reflection.Console\bin\Debug\netcoreapp3.1\Reflection.Console.deps.json
+H:\DesktopMedia\ChatApp\Reflection.Console\bin\Debug\netcoreapp3.1\Reflection.Console.runtimeconfig.json
+H:\DesktopMedia\ChatApp\Reflection.Console\bin\Debug\netcoreapp3.1\Reflection.Console.runtimeconfig.dev.json
+H:\DesktopMedia\ChatApp\Reflection.Console\bin\Debug\netcoreapp3.1\Reflection.Console.dll
+H:\DesktopMedia\ChatApp\Reflection.Console\bin\Debug\netcoreapp3.1\Reflection.Console.pdb
+H:\DesktopMedia\ChatApp\Reflection.Console\obj\Debug\netcoreapp3.1\Reflection.Console.dll
+H:\DesktopMedia\ChatApp\Reflection.Console\obj\Debug\netcoreapp3.1\Reflection.Console.pdb
+H:\DesktopMedia\ChatApp\Reflection.Console\obj\Debug\netcoreapp3.1\Reflection.Console.genruntimeconfig.cache
+H:\DesktopMedia\ChatApp\Reflection.Console\obj\Debug\netcoreapp3.1\Reflection.Console.csprojAssemblyReference.cache
